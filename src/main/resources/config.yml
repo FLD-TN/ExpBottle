@@ -1,0 +1,6 @@
+bottle-display-name: "§aExp Bottle §7({amount} XP)"
+bottle-lore:
+  - "§7Right-click to consume"
+  - "§7Contains {amount} experience points"
+
+min-use-delay: 100
