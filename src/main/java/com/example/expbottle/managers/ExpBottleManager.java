@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class ExpBottleManager {
@@ -16,11 +17,16 @@ public class ExpBottleManager {
     private final ExpBottlePlugin plugin;
     private final ConfigManager configManager;
     private final NamespacedKey expAmountKey;
+    private final DecimalFormat numberFormat = new DecimalFormat("#,###");
     
     public ExpBottleManager(ExpBottlePlugin plugin, ConfigManager configManager) {
         this.plugin = plugin;
         this.configManager = configManager;
         this.expAmountKey = new NamespacedKey(plugin, "exp_amount");
+    }
+    
+    private String formatNumber(int number) {
+        return numberFormat.format(number);
     }
     
     public ItemStack createExpBottle(int expAmount) {
@@ -31,13 +37,13 @@ public class ExpBottleManager {
         if (meta == null) return null;
         
         String displayName = configManager.getCachedValue("bottle-display-name", "&aChai Kinh Nghiệm &8[&b{amount} XP&8]")
-                .replace("{amount}", String.valueOf(expAmount));
+                .replace("{amount}", formatNumber(expAmount));
         meta.setDisplayName(displayName);
         
         List<String> lore = configManager.getCachedStringList("bottle-lore");
         if (lore != null && !lore.isEmpty()) {
             for (int i = 0; i < lore.size(); i++) {
-                lore.set(i, lore.get(i).replace("{amount}", String.valueOf(expAmount)));
+                lore.set(i, lore.get(i).replace("{amount}", formatNumber(expAmount)));
             }
             meta.setLore(lore);
         }

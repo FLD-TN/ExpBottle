@@ -1,6 +1,8 @@
-bottle-display-name: "§aExp Bottle §7({amount} XP)"
+bottle-display-name: "§eChai Kinh Nghiệm §8[§b{amount} xp§8]"
 bottle-lore:
-  - "§7Right-click to consume"
-  - "§7Contains {amount} experience points"
+  - " "
+  - " §7Chứa §b{amount} XP"
+  - " "
+  - "§8[§eChuột phải để nhận exp§8]"
 
 min-use-delay: 100

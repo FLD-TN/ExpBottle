@@ -7,13 +7,19 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import java.text.DecimalFormat;
 
 public class ExpCommand implements CommandExecutor {
     
     private final ExpBottleManager expBottleManager;
+    private final DecimalFormat numberFormat = new DecimalFormat("#,###");
     
     public ExpCommand(ExpBottleManager expBottleManager) {
         this.expBottleManager = expBottleManager;
+    }
+    
+    private String formatNumber(int number) {
+        return numberFormat.format(number);
     }
     
     @Override
@@ -27,11 +33,11 @@ public class ExpCommand implements CommandExecutor {
         
         if (args.length == 0) {
             int totalExp = expBottleManager.getPlayerExp(player);
-            player.sendMessage(ChatColor.GREEN + "[!] Tổng số kinh nghiệm hiện có: " + ChatColor.AQUA + totalExp + " XP");
+            player.sendMessage(ChatColor.GREEN + "[!] Tổng số kinh nghiệm hiện có: " + ChatColor.AQUA + formatNumber(totalExp) + " XP");
             return true;
         }
         
-        if (args[0].equalsIgnoreCase("bottle") && args.length == 2) {
+        if (args[0].equalsIgnoreCase("withdraw") && args.length == 2) {
             try {
                 int amount = Integer.parseInt(args[1]);
                 if (amount <= 0) {
@@ -46,7 +52,7 @@ public class ExpCommand implements CommandExecutor {
                 }
                 
                 player.getInventory().addItem(bottle);
-                player.sendMessage(ChatColor.GREEN + "[!] Đã tạo chai kinh nghiệm với " + ChatColor.AQUA + amount + " XP!");
+                player.sendMessage(ChatColor.GREEN + "[!] Đã tạo chai kinh nghiệm với " + ChatColor.AQUA + formatNumber(amount) + " XP!");
                 return true;
                 
             } catch (NumberFormatException e) {
@@ -55,7 +61,7 @@ public class ExpCommand implements CommandExecutor {
             }
         }
         
-        player.sendMessage(ChatColor.YELLOW + "Usage: /expbottle bottle <Số Lượng>]");
+        player.sendMessage(ChatColor.YELLOW + "Usage: /expbottle withdraw <Số Lượng>]");
         return true;
     }
 }
